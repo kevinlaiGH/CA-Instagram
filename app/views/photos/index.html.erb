@@ -2,6 +2,10 @@
 
 <h1>Photos</h1>
 
+<%= link_to 'Add Photo', new_photo_path %>
+
+<%= render @photos %>
+
 <table>
   <thead>
     <tr>
@@ -11,6 +15,7 @@
       <th colspan="3"></th>
     </tr>
   </thead>
+
 
   <tbody>
     <% @photos.each do |photo| %>
