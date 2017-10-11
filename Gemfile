@@ -5,8 +5,13 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem "shrine"
+gem 'sprockets-rails', :require => 'sprockets/railtie'
+gem 'bootstrap', '~> 4.0.0.beta'
+gem 'acts_as_votable', '~> 0.10.0'
+gem "shrine", '~> 2.7.0'
 gem 'devise'
+gem "image_processing"
+gem "mini_magick", ">= 4.3.5"
 
 gem 'rails', '~> 5.1.4'
 gem 'sqlite3'

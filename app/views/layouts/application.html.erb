@@ -10,9 +10,17 @@
 
   <body>
   <ul class="hmenu">
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
     <%= render 'home/registration_items'%>
     <%= render 'home/login_items'%>
+    <%= render 'home/search'%>
   </ul>
+    <div class= "container" >
+
+    <!-- to make it not edgy -->
   <%= yield %>
 
     <p class="notice"><%= notice %></p>

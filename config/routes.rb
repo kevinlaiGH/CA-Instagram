@@ -1,12 +1,15 @@
 Rails.application.routes.draw do
-  resources :photos
-  # get 'landing/index'
-  root "home#landing"
-
-  resources :photos, only: [:new, :create, :index, :edit, :update]
+  resources :comments
+  devise_for :users
+  resources :photos do
+    member do
+      put "like", to: "photos#upvote"
+      put "dislike", to: "photos#downvote"
+    end
+  end
 
   root 'photos#index'
 
-  devise_for :users
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

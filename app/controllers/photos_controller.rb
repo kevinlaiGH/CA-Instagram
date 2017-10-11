@@ -1,10 +1,14 @@
 class PhotosController < ApplicationController
   before_action :set_photo, only: [:show, :edit, :update, :destroy]
-
-  # GET /photos
+    # GET /photos
   # GET /photos.json
   def index
-    @photos = Photo.all
+      @photos= Photo.all
+    if params[:search]
+      @photo = Photo.search(params[:search]).order("created_at DESC")
+    else
+      @photo = Photo.all.order("created_at DESC")
+    end
   end
 
   # GET /photos/1
@@ -14,7 +18,7 @@ class PhotosController < ApplicationController
 
   # GET /photos/new
   def new
-    @photo = Photo.new
+    @photo = current_user.photos.build
   end
 
   # GET /photos/1/edit
@@ -24,7 +28,7 @@ class PhotosController < ApplicationController
   # POST /photos
   # POST /photos.json
   def create
-    @photo = Photo.new(photo_params)
+    @photo = current_user.photos.build(photo_params)
 
     respond_to do |format|
       if @photo.save
@@ -61,6 +65,18 @@ class PhotosController < ApplicationController
     end
   end
 
+  def upvote
+    @photo = Photo.find(params[:id])
+    @photo.upvote_by current_user
+    redirect_back fallback_location: root_path
+  end
+
+  def downvote
+    @photo = Photo.find(params[:id])
+    @photo.downvote_by current_user
+    redirect_back fallback_location: root_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_photo
@@ -69,6 +85,6 @@ class PhotosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def photo_params
-      params.require(:photo).permit(:image_data, :user_id, :caption)
+      params.require(:photo).permit(:image, :image_data, :caption)
     end
 end
